@@ -127,3 +127,89 @@ document.getElementById("result").style.transform="scale(1)";
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>AI Palm</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0b1220;
+color:white;
+text-align:center;
+padding-top:60px;
+}
+
+h1{
+color:#38bdf8;
+}
+
+.hand{
+font-size:120px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.hand:active{
+transform:scale(0.95);
+}
+
+.box{
+margin:20px auto;
+width:300px;
+padding:20px;
+background:#111827;
+border-radius:15px;
+border:1px solid #38bdf8;
+min-height:60px;
+}
+
+.btn{
+background:#38bdf8;
+border:none;
+padding:10px 20px;
+color:white;
+border-radius:10px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🤖 AI بصمة المستقبل</h1>
+
+<p>اضغط على اليد واسأل الذكاء الاصطناعي</p>
+
+<div class="hand" onclick="predict()">✋</div>
+
+<div class="box" id="result">جاهز للإجابة...</div>
+
+<button class="btn" onclick="predict()">توقع جديد</button>
+
+<script>
+function predict(){
+
+let replies = [
+"🤖 تحليل AI: لديك فرصة جيدة هذا الأسبوع",
+"🧠 الذكاء الاصطناعي يرى نجاح قريب",
+"🔮 تحليل البيانات: طريقك يتحسن",
+"📊 AI: تحتاج فقط خطوة صغيرة للنجاح",
+"⚡ النظام يتوقع خبر سعيد قريبًا",
+"🌍 تحليل: تغيير إيجابي في حياتك",
+"💡 AI يقترح: لا تتوقف الآن",
+"🚀 فرصة قوية خلال أيام"
+];
+
+// اختيار عشوائي (AI بسيط)
+let text = replies[Math.floor(Math.random()*replies.length)];
+
+document.getElementById("result").innerHTML = text;
+}
+</script>
+
+</body>
+</html>
