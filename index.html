@@ -20,6 +20,41 @@ scroll-behavior:smooth;
 }
 
 body{
+     <body>
+
+<!-- 👇 ضع كود اللغات هنا -->
+<div>
+  <button onclick="setLang('ar')">العربية</button>
+  <button onclick="setLang('en')">English</button>
+  <button onclick="setLang('fr')">Français</button>
+  <button onclick="setLang('es')">Español</button>
+
+  <h1 id="title"></h1>
+  <p id="text"></p>
+</div>
+
+<script>
+function setLang(lang){
+  const data = {
+    ar:{title:"مرحبا", text:"موقع عربي"},
+    en:{title:"Welcome", text:"English site"},
+    fr:{title:"Bienvenue", text:"Site français"},
+    es:{title:"Bienvenido", text:"Sitio español"}
+  };
+
+  document.getElementById("title").innerText = data[lang].title;
+  document.getElementById("text").innerText = data[lang].text;
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+}
+
+setLang("ar");
+</script>
+
+<!-- 👆 هنا -->
+
+</body>
 background:#020617;
 color:white;
 overflow-x:hidden;
