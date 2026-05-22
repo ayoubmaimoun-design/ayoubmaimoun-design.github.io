@@ -1,798 +1,277 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+from pathlib import Path
+
+import zipfile
+
+base = Path("/mnt/data/chat-pro-site")
+
+base.mkdir(exist_ok=True)
+
+index_html = """<!DOCTYPE html>
+
+<html lang="ar">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CryptoNews</title>
+<title>Chat Pro</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Cairo',sans-serif;
-scroll-behavior:smooth;
-}
-
-body{
-   <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Mini Open World</title>
 </head>
 
 <body>
 
-<h2 style="text-align:center;color:#38bdf8">Mini Open World 🚶‍♂️</h2>
+<div class="container">
 
-<canvas id="game" width="600" height="400"
-style="display:block;margin:auto;background:#0b1220;border:2px solid #38bdf8"></canvas>
+<div class="sidebar">
 
-<p style="text-align:center;color:white">
-التحكم: الأسهم | اجمع العملات 💰 | تجنب الحواجز
-</p>
+<h2>💬 Chat Pro</h2>
 
-<script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+<p>موقع دردشة احترافي</p>
 
-// العالم الكبير
-const world = { w: 2000, h: 1500 };
+</div>
 
-// اللاعب
-let player = {
-  x: 1000,
-  y: 700,
-  size: 20,
-  speed: 6,
-  vx:0,
-  vy:0
-};
+<div class="chat-area">
 
-// كاميرا
-let cam = { x:0, y:0 };
+<div id="messages"></div>
 
-let keys = {};
-let score = 0;
+<div class="send-box">
 
-// عملات
-let coins = [];
-for(let i=0;i<50;i++){
-  coins.push({
-    x: Math.random()*world.w,
-    y: Math.random()*world.h
-  });
-}
+<input type="text" id="messageInput" placeholder="اكتب رسالة">
 
-// حواجز
-let blocks = [];
-for(let i=0;i<40;i++){
-  blocks.push({
-    x: Math.random()*world.w,
-    y: Math.random()*world.h,
-    w: 60,
-    h: 60
-  });
-}
+<button id="sendBtn">إرسال</button>
 
-document.addEventListener("keydown", e=>keys[e.key]=true);
-document.addEventListener("keyup", e=>keys[e.key]=false);
+</div>
 
-function move(){
-  player.vx = 0;
-  player.vy = 0;
+</div>
 
-  if(keys["ArrowUp"]) player.vy = -player.speed;
-  if(keys["ArrowDown"]) player.vy = player.speed;
-  if(keys["ArrowLeft"]) player.vx = -player.speed;
-  if(keys["ArrowRight"]) player.vx = player.speed;
+</div>
 
-  let oldX = player.x;
-  let oldY = player.y;
-
-  player.x += player.vx;
-  player.y += player.vy;
-
-  player.x = Math.max(0, Math.min(world.w, player.x));
-  player.y = Math.max(0, Math.min(world.h, player.y));
-
-  for(let b of blocks){
-    if(player.x < b.x+b.w &&
-       player.x+player.size > b.x &&
-       player.y < b.y+b.h &&
-       player.y+player.size > b.y){
-      player.x = oldX;
-      player.y = oldY;
-    }
-  }
-
-  cam.x += (player.x - canvas.width/2 - cam.x) * 0.1;
-  cam.y += (player.y - canvas.height/2 - cam.y) * 0.1;
-}
-
-function draw(){
-
-  ctx.fillStyle="#0b1220";
-  ctx.fillRect(0,0,600,400);
-
-  ctx.fillStyle="#111827";
-  ctx.fillRect(-cam.x,-cam.y,world.w,world.h);
-
-  ctx.fillStyle="#334155";
-  for(let b of blocks){
-    ctx.fillRect(b.x-cam.x,b.y-cam.y,b.w,b.h);
-  }
-
-  for(let i=0;i<coins.length;i++){
-    let c = coins[i];
-
-    ctx.fillStyle="gold";
-    ctx.beginPath();
-    ctx.arc(c.x-cam.x,c.y-cam.y,6,0,Math.PI*2);
-    ctx.fill();
-
-    if(Math.abs(player.x-c.x)<20 && Math.abs(player.y-c.y)<20){
-      coins.splice(i,1);
-      score += 10;
-    }
-  }
-
-  ctx.fillStyle="#38bdf8";
-  ctx.fillRect(
-    player.x-cam.x,
-    player.y-cam.y,
-    player.size,
-    player.size
-  );
-
-  ctx.fillStyle="white";
-  ctx.font="16px Arial";
-  ctx.fillText("Score: "+score,10,20);
-}
-
-function loop(){
-  move();
-  draw();
-  requestAnimationFrame(loop);
-}
-
-loop();
-</script>
+<script type="module" src="app.js"></script>
 
 </body>
-</html>  
-<!-- 👇 ضع كود اللغات هنا -->
-<div>
-  <button onclick="setLang('ar')">العربية</button>
-  <button onclick="setLang('en')">English</button>
-  <button onclick="setLang('fr')">Français</button>
-  <button onclick="setLang('es')">Español</button>
 
-  <h1 id="title"></h1>
-  <p id="text"></p>
-</div>
-
-<script>
-function setLang(lang){
-  const data = {
-    ar:{title:"مرحبا", text:"موقع عربي"},
-    en:{title:"Welcome", text:"English site"},
-    fr:{title:"Bienvenue", text:"Site français"},
-    es:{title:"Bienvenido", text:"Sitio español"}
-  };
-
-  document.getElementById("title").innerText = data[lang].title;
-  document.getElementById("text").innerText = data[lang].text;
-
-  document.documentElement.lang = lang;
-  document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
-}
-
-setLang("ar");
-</script>
-
-<!-- 👆 هنا -->
-
-</body<h2 style="text-align:center;color:white">لعبة الدودة 🐍</h2>
-
-<canvas id="game" width="300" height="300"
-style="display:block;margin:auto;background:#111;border:2px solid white"></canvas>
-
-<p style="text-align:center">استعمل الأسهم للتحكم</p>
-
-<script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-
-let box = 15;
-let snake = [];
-snake[0] = {x: 9 * box, y: 9 * box};
-
-let direction = "RIGHT";
-
-let food = {
-  x: Math.floor(Math.random()*20)*box,
-  y: Math.floor(Math.random()*20)*box
-};
-
-document.addEventListener("keydown", update);
-
-function update(event){
-  if(event.keyCode == 37 && direction != "RIGHT") direction = "LEFT";
-  if(event.keyCode == 38 && direction != "DOWN") direction = "UP";
-  if(event.keyCode == 39 && direction != "LEFT") direction = "RIGHT";
-  if(event.keyCode == 40 && direction != "UP") direction = "DOWN";
-}
-
-function draw(){
-  ctx.fillStyle = "#111";
-  ctx.fillRect(0,0,300,300);
-
-  for(let i=0;i<snake.length;i++){
-    ctx.fillStyle = "lime";
-    ctx.fillRect(snake[i].x, snake[i].y, box, box);
-  }
-
-  ctx.fillStyle = "red";
-  ctx.fillRect(food.x, food.y, box, box);
-
-  let headX = snake[0].x;
-  let headY = snake[0].y;
-
-  if(direction == "LEFT") headX -= box;
-  if(direction == "RIGHT") headX += box;
-  if(direction == "UP") headY -= box;
-  if(direction == "DOWN") headY += box;
-
-  if(headX == food.x && headY == food.y){
-    food = {
-      x: Math.floor(Math.random()*20)*box,
-      y: Math.floor(Math.random()*20)*box
-    };
-  } else {
-    snake.pop();
-  }
-
-  let newHead = {x: headX, y: headY};
-
-  if(headX < 0 || headY < 0 || headX >= 300 || headY >= 300){
-    alert("انتهت اللعبة 💀");
-    snake = [{x: 9*box, y: 9*box}];
-  }
-
-  snake.unshift(newHead);
-}
-
-setInterval(draw, 120);
-</script>>
-background:#020617;
-color:white;
-overflow-x:hidden;
-}
-
-/* شاشة التحميل */
-
-#loader{
-position:fixed;
-width:100%;
-height:100%;
-background:#020617;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:99999;
-font-size:45px;
-color:#00ffd5;
-font-weight:bold;
-transition:1s;
-}
-
-.hide{
-opacity:0;
-visibility:hidden;
-}
-
-/* Header */
-
-header{
-position:fixed;
-top:0;
-width:100%;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(10px);
-padding:15px 30px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:1000;
-}
-
-.logo{
-font-size:35px;
-font-weight:bold;
-color:#00ffd5;
-}
-
-nav{
-display:flex;
-gap:20px;
-}
-
-nav a{
-color:white;
-text-decoration:none;
-font-size:18px;
-transition:0.3s;
-}
-
-nav a:hover{
-color:#00ffd5;
-}
-
-/* Hero */
-
-.hero{
-height:100vh;
-background:
-linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
-url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=1400');
-
-background-size:cover;
-background-position:center;
-
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-}
-
-.hero h1{
-font-size:70px;
-margin-bottom:20px;
-}
-
-.hero p{
-font-size:24px;
-color:#ddd;
-margin-bottom:30px;
-}
-
-.hero button{
-padding:16px 40px;
-border:none;
-border-radius:15px;
-background:#00ffd5;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-}
-
-.hero button:hover{
-transform:scale(1.08);
-box-shadow:0 0 20px #00ffd5;
-}
-
-/* إعلان */
-
-.ads{
-width:90%;
-margin:40px auto;
-background:#facc15;
-padding:25px;
-border-radius:20px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-color:black;
-}
-
-/* الأخبار */
-
-.section{
-padding:120px 30px;
-}
-
-.title{
-text-align:center;
-font-size:55px;
-color:#00ffd5;
-margin-bottom:50px;
-}
-
-.search{
-display:flex;
-justify-content:center;
-margin-bottom:40px;
-}
-
-.search input{
-width:80%;
-max-width:500px;
-padding:18px;
-border:none;
-border-radius:50px;
-background:#111827;
-color:white;
-font-size:18px;
-outline:none;
-border:2px solid #00ffd5;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-}
-
-.card{
-background:#111827;
-border-radius:20px;
-overflow:hidden;
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 25px rgba(0,255,213,0.4);
-}
-
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-}
-
-.content{
-padding:20px;
-}
-
-.content h3{
-font-size:25px;
-margin-bottom:10px;
-}
-
-.content p{
-color:#bbb;
-line-height:1.8;
-}
-
-/* لعبة */
-
-.game{
-text-align:center;
-}
-
-canvas{
-margin-top:20px;
-background:black;
-border:4px solid #00ffd5;
-border-radius:15px;
-max-width:100%;
-}
-
-/* Footer */
-
-footer{
-background:#000;
-padding:30px;
-text-align:center;
-color:#777;
-}
-
-/* الهاتف */
-
-@media(max-width:768px){
-
-header{
-flex-direction:column;
-}
-
-nav{
-margin-top:15px;
-flex-wrap:wrap;
-justify-content:center;
-}
-
-.hero h1{
-font-size:45px;
-}
-
-.hero p{
-font-size:18px;
-}
-
-.title{
-font-size:40px;
-}
-
-}
-
-</style>
-</head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2860289075608973"
-     crossorigin="anonymous"></script>
-<body>
-
-<!-- شاشة التحميل -->
-
-<div id="loader">
-CryptoNews
-</div>
-
-<header>
-
-<div class="logo">
-CryptoNews
-</div>
-
-<nav>
-<a href="#">الرئيسية</a>
-<a href="#">الكريبتو</a>
-<a href="#">الألعاب</a>
-<a href="#">الأخبار</a>
-<a href="#">اتصل بنا</a>
-</nav>
-
-</header>
-
-<!-- الصفحة الرئيسية -->
-
-<section class="hero">
-
-<div>
-
-<h1>
-أخبار الكريبتو والألعاب
-</h1>
-
-<p>
-أحدث أخبار العملات الرقمية والألعاب العالمية
-</p>
-
-<button onclick="startSite()">
-ابدأ الآن
-</button>
-
-</div>
-
-</section>
-
-<!-- إعلان -->
-
-<div class="ads">
-مكان إعلان Google AdSense هنا
-</div>
-
-<!-- الأخبار -->
-
-<section class="section" id="news">
-
-<h2 class="title">
-آخر الأخبار
-</h2>
-
-<div class="search">
-<input type="text" placeholder="ابحث في الأخبار...">
-</div>
-
-<div class="grid">
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200">
-
-<div class="content">
-<h3>أخبار الألعاب</h3>
-<p>
-لعبة جديدة تحقق ملايين اللاعبين حول العالم بسرعة كبيرة.
-</p>
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1621761191319-c6fb62004040?q=80&w=1200">
-
-<div class="content">
-<h3>Bitcoin يرتفع</h3>
-<p>
-أسعار العملات الرقمية ترتفع بشكل قوي هذا الأسبوع.
-</p>
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=1200">
-
-<div class="content">
-<h3>الذكاء الاصطناعي</h3>
-<p>
-تقنيات الذكاء الاصطناعي تغيّر مستقبل الإنترنت والتطبيقات.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- اللعبة -->
-
-<section class="section game">
-
-<h2 class="title">
-لعبة الدودة 🐍
-</h2>
-
-<h2 id="score">
-النقاط: 0
-</h2>
-
-<canvas id="game" width="400" height="400"></canvas>
-
-</section>
-
-<footer>
-© 2026 جميع الحقوق محفوظة
-</footer>
-
-<!-- صوت -->
-
-<audio id="clickSound">
-<source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3">
-</audio>
-
-<script>
-
-/* شاشة التحميل */
-
-window.addEventListener("load",()=>{
-
-document.getElementById("loader").classList.add("hide");
-
-});
-
-/* زر ابدأ */
-
-function startSite(){
-
-document.getElementById("news").scrollIntoView({
-behavior:"smooth"
-});
-
-document.getElementById("clickSound").play();
-
-}
-
-/* لعبة الدودة */
-
-const canvas=document.getElementById("game");
-const ctx=canvas.getContext("2d");
-
-let box=20;
-
-let snake=[];
-snake[0]={x:9*box,y:10*box};
-
-let food={
-x:Math.floor(Math.random()*19+1)*box,
-y:Math.floor(Math.random()*19+1)*box
-};
-
-let score=0;
-let direction;
-
-document.addEventListener("keydown",dir);
-
-function dir(event){
-
-if(event.keyCode==37 && direction!="RIGHT")
-direction="LEFT";
-
-else if(event.keyCode==38 && direction!="DOWN")
-direction="UP";
-
-else if(event.keyCode==39 && direction!="LEFT")
-direction="RIGHT";
-
-else if(event.keyCode==40 && direction!="UP")
-direction="DOWN";
-
-}
-
-function collision(head,array){
-
-for(let i=0;i<array.length;i++){
-
-if(head.x==array[i].x && head.y==array[i].y){
-return true;
-}
-
-}
-
-return false;
-
-}
-
-function draw(){
-
-ctx.fillStyle="black";
-ctx.fillRect(0,0,400,400);
-
-for(let i=0;i<snake.length;i++){
-
-ctx.fillStyle=(i==0)?"#00ffd5":"white";
-ctx.fillRect(snake[i].x,snake[i].y,box,box);
-
-}
-
-ctx.fillStyle="red";
-ctx.fillRect(food.x,food.y,box,box);
-
-let snakeX=snake[0].x;
-let snakeY=snake[0].y;
-
-if(direction=="LEFT") snakeX-=box;
-if(direction=="UP") snakeY-=box;
-if(direction=="RIGHT") snakeX+=box;
-if(direction=="DOWN") snakeY+=box;
-
-if(snakeX==food.x && snakeY==food.y){
-
-score++;
-
-document.getElementById("score").innerHTML=
-"النقاط: "+score;
-
-food={
-x:Math.floor(Math.random()*19+1)*box,
-y:Math.floor(Math.random()*19+1)*box
-};
-
-}else{
-snake.pop();
-}
-
-let newHead={
-x:snakeX,
-y:snakeY
-};
-
-if(
-snakeX<0 ||
-snakeY<0 ||
-snakeX>=400 ||
-snakeY>=400 ||
-collision(newHead,snake)
-){
-
-clearInterval(game);
-
-alert("انتهت اللعبة");
-
-location.reload();
-
-}
-
-snake.unshift(newHead);
-
-}
-
-let game=setInterval(draw,100);
-
-</script>
-
-</body>
 </html>
+
+"""
+
+style_css = """body{
+
+margin:0;
+
+font-family:Arial;
+
+background:#0f172a;
+
+color:white;
+
+}
+
+.container{
+
+display:flex;
+
+height:100vh;
+
+}
+
+.sidebar{
+
+width:250px;
+
+background:#1e293b;
+
+padding:20px;
+
+}
+
+.chat-area{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+#messages{
+
+flex:1;
+
+padding:20px;
+
+overflow-y:auto;
+
+}
+
+.message{
+
+background:#2563eb;
+
+padding:10px;
+
+margin:10px 0;
+
+border-radius:10px;
+
+width:fit-content;
+
+max-width:70%;
+
+}
+
+.send-box{
+
+display:flex;
+
+padding:15px;
+
+background:#1e293b;
+
+}
+
+.send-box input{
+
+flex:1;
+
+padding:12px;
+
+border:none;
+
+border-radius:10px;
+
+}
+
+.send-box button{
+
+margin-left:10px;
+
+padding:12px 20px;
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+"""
+
+firebase_js = """import { initializeApp } from 
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+const firebaseConfig = {
+
+apiKey: "ضع API KEY هنا",
+
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+
+projectId: "YOUR_PROJECT",
+
+storageBucket: "YOUR_PROJECT.appspot.com",
+
+messagingSenderId: "123456",
+
+appId: "APP_ID"
+
+};
+
+export const app = initializeApp(firebaseConfig);
+
+"""
+
+app_js = """import { app } from "./firebase.js";
+
+import {
+
+getFirestore,
+
+collection,
+
+addDoc,
+
+onSnapshot,
+
+query,
+
+orderBy
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+const input = document.getElementById("messageInput");
+
+const sendBtn = document.getElementById("sendBtn");
+
+const messages = document.getElementById("messages");
+
+sendBtn.onclick = async () => {
+
+if(input.value.trim() !== ""){
+
+await addDoc(collection(db,"messages"),{
+
+text: input.value,
+
+time: Date.now()
+
+});
+
+input.value = "";
+
+}
+
+};
+
+const q = query(collection(db,"messages"),orderBy("time"));
+
+onSnapshot(q,(snapshot)=>{
+
+messages.innerHTML = "";
+
+snapshot.forEach((doc)=>{
+
+const div = document.createElement("div");
+
+div.className = "message";
+
+div.innerText = doc.data().text;
+
+messages.appendChild(div);
+
+});
+
+});
+
+"""
+
+(base / "index.html").write_text(index_html, encoding="utf-8")
+
+(base / "style.css").write_text(style_css, encoding="utf-8")
+
+(base / "firebase.js").write_text(firebase_js, encoding="utf-8")
+
+(base / "app.js").write_text(app_js, encoding="utf-8")
+
+zip_path = "/mnt/data/chat-pro-site.zip"
+
+with zipfile.ZipFile(zip_path, "w") as zipf:
+
+    for file in base.iterdir():
+
+        zipf.write(file, arcname=file.name)
+
+print("Created:", zip_path)
