@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🚀 Galaxy Metaverse</title>
+<title>🎬 MOVIX</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -16,140 +16,284 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Cairo',sans-serif;
+scroll-behavior:smooth;
 }
 
 body{
-overflow:hidden;
-background:black;
+background:#050505;
+color:white;
+overflow-x:hidden;
 }
 
-/* واجهة */
+/* NAVBAR */
 
-.ui{
-position:absolute;
+.navbar{
+position:fixed;
 top:0;
 left:0;
 width:100%;
-padding:20px;
+height:80px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-z-index:10;
-color:white;
+padding:0 40px;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(15px);
+z-index:999;
 }
 
 .logo{
-font-size:35px;
+font-size:38px;
 font-weight:900;
-background:linear-gradient(90deg,#00ffff,#9333ea,#ff00ff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-shadow:0 0 20px cyan;
+color:#ff1e1e;
+text-shadow:0 0 20px red;
 }
 
-.menu{
+.nav-links{
 display:flex;
-gap:15px;
+gap:25px;
 }
 
-.menu button{
-padding:12px 20px;
-border:none;
-border-radius:15px;
-background:rgba(255,255,255,0.1);
+.nav-links a{
 color:white;
-cursor:pointer;
-backdrop-filter:blur(10px);
+text-decoration:none;
+font-size:17px;
 transition:0.3s;
 }
 
-.menu button:hover{
-background:#2563eb;
+.nav-links a:hover{
+color:#ff1e1e;
+}
+
+.search-box{
+display:flex;
+align-items:center;
+background:#111;
+padding:10px 15px;
+border-radius:12px;
+}
+
+.search-box input{
+background:none;
+border:none;
+outline:none;
+color:white;
+font-size:15px;
+width:180px;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+background:
+linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,0,0,0.3)),
+url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070');
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+padding:80px;
+}
+
+.hero-content{
+max-width:650px;
+}
+
+.hero h1{
+font-size:85px;
+font-weight:900;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:22px;
+line-height:1.8;
+color:#ddd;
+margin-bottom:30px;
+}
+
+.hero-buttons{
+display:flex;
+gap:20px;
+}
+
+.hero-buttons button{
+padding:18px 35px;
+border:none;
+border-radius:15px;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.watch-btn{
+background:#ff1e1e;
+color:white;
+}
+
+.watch-btn:hover{
 transform:scale(1.05);
 }
 
-/* دردشة */
+.list-btn{
+background:#222;
+color:white;
+}
 
-.chat{
-position:absolute;
-right:20px;
-bottom:20px;
-width:320px;
-height:420px;
-background:rgba(15,23,42,0.8);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,0.1);
+.list-btn:hover{
+background:#333;
+}
+
+/* SLIDER */
+
+.section{
+padding:50px;
+}
+
+.section-title{
+font-size:35px;
+margin-bottom:30px;
+font-weight:800;
+}
+
+.movies{
+display:flex;
+overflow-x:auto;
+gap:20px;
+padding-bottom:20px;
+}
+
+.movies::-webkit-scrollbar{
+display:none;
+}
+
+.movie-card{
+min-width:240px;
+background:#111;
 border-radius:20px;
-display:flex;
-flex-direction:column;
 overflow:hidden;
-z-index:10;
+transition:0.3s;
+cursor:pointer;
+position:relative;
 }
 
-.chat-header{
+.movie-card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.movie-card img{
+width:100%;
+height:340px;
+object-fit:cover;
+}
+
+.movie-info{
 padding:15px;
-background:rgba(255,255,255,0.05);
-color:white;
-font-weight:bold;
 }
 
-.messages{
-flex:1;
+.movie-info h3{
+margin-bottom:10px;
+font-size:20px;
+}
+
+.movie-info p{
+font-size:14px;
+color:#aaa;
+line-height:1.7;
+}
+
+/* VIDEO PLAYER */
+
+.player-section{
+padding:50px;
+}
+
+.video-container{
+position:relative;
+width:100%;
+border-radius:25px;
+overflow:hidden;
+box-shadow:0 0 40px rgba(0,0,0,0.6);
+}
+
+video{
+width:100%;
+display:block;
+background:black;
+}
+
+/* LOGIN */
+
+.login-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.login-box{
+width:400px;
+background:#111;
+padding:40px;
+border-radius:25px;
+text-align:center;
+}
+
+.login-box h2{
+margin-bottom:25px;
+font-size:35px;
+}
+
+.login-box input{
+width:100%;
 padding:15px;
-overflow-y:auto;
-display:flex;
-flex-direction:column;
-}
-
-.msg{
-padding:12px;
-margin:8px 0;
-border-radius:15px;
-max-width:80%;
-color:white;
-animation:show 0.3s ease;
-}
-
-.me{
-background:#2563eb;
-align-self:flex-end;
-}
-
-.bot{
-background:#334155;
-align-self:flex-start;
-}
-
-.input-box{
-display:flex;
-padding:10px;
-background:rgba(255,255,255,0.05);
-}
-
-.input-box input{
-flex:1;
-padding:12px;
+margin:10px 0;
 border:none;
 outline:none;
 border-radius:12px;
-background:#0f172a;
+background:#1e1e1e;
 color:white;
 }
 
-.input-box button{
-margin-left:10px;
-padding:12px 18px;
+.login-box button{
+width:100%;
+padding:15px;
+margin-top:15px;
 border:none;
 border-radius:12px;
-background:#9333ea;
+background:#ff1e1e;
 color:white;
+font-size:18px;
 cursor:pointer;
 }
 
-@keyframes show{
+/* FOOTER */
+
+footer{
+padding:40px;
+text-align:center;
+background:#111;
+color:#999;
+margin-top:50px;
+}
+
+/* ANIMATION */
+
+.fade{
+animation:fade 1s ease;
+}
+
+@keyframes fade{
 from{
 opacity:0;
-transform:translateY(10px);
+transform:translateY(20px);
 }
 to{
 opacity:1;
@@ -157,22 +301,42 @@ transform:translateY(0);
 }
 }
 
-/* معلومات */
+/* MOBILE */
 
-.info{
-position:absolute;
-left:20px;
-bottom:20px;
-color:white;
-z-index:10;
-background:rgba(15,23,42,0.7);
-padding:20px;
-border-radius:20px;
-backdrop-filter:blur(10px);
+@media(max-width:900px){
+
+.navbar{
+padding:0 20px;
 }
 
-canvas{
-display:block;
+.nav-links{
+display:none;
+}
+
+.hero{
+padding:30px;
+}
+
+.hero h1{
+font-size:55px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.hero-buttons{
+flex-direction:column;
+}
+
+.movie-card{
+min-width:180px;
+}
+
+.login-box{
+width:90%;
+}
+
 }
 
 </style>
@@ -181,339 +345,273 @@ display:block;
 
 <body>
 
-<div class="ui">
+<!-- LOGIN -->
 
-<div class="logo">
-🚀 Galaxy Metaverse
-</div>
+<div class="login-modal" id="loginModal">
 
-<div class="menu">
-<button>🌍 عالم</button>
-<button>🤖 AI</button>
-<button>💬 دردشة</button>
-<button>⚙️ إعدادات</button>
-</div>
+<div class="login-box fade">
 
-</div>
+<h2>🎬 تسجيل الدخول</h2>
 
-<div class="info">
-<h2>🪐 عالم ثلاثي الأبعاد</h2>
-<p>استكشف المجرة المستقبلية</p>
-</div>
+<input type="email" placeholder="البريد الإلكتروني">
 
-<div class="chat">
+<input type="password" placeholder="كلمة المرور">
 
-<div class="chat-header">
-💬 Galaxy Chat
-</div>
-
-<div class="messages" id="messages">
-
-<div class="msg bot">
-مرحبا بك في المجرة 🚀
-</div>
-
-</div>
-
-<div class="input-box">
-
-<input type="text" id="messageInput" placeholder="اكتب رسالة...">
-
-<button id="sendBtn">
-إرسال
+<button onclick="closeLogin()">
+دخول
 </button>
 
 </div>
 
 </div>
 
-<script type="module">
+<!-- NAVBAR -->
 
-import * as THREE from 
-'https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js';
+<div class="navbar">
 
-/* المشهد */
+<div class="logo">
+MOVIX
+</div>
 
-const scene = new THREE.Scene();
+<div class="nav-links">
+<a href="#">الرئيسية</a>
+<a href="#">الأفلام</a>
+<a href="#">المسلسلات</a>
+<a href="#">الأكثر مشاهدة</a>
+</div>
 
-scene.fog = new THREE.Fog(
-0x000000,
-20,
-120
-);
+<div class="search-box">
+<input type="text" placeholder="ابحث عن فيلم...">
+</div>
 
-/* الكاميرا */
+</div>
 
-const camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth/window.innerHeight,
-0.1,
-1000
-);
+<!-- HERO -->
 
-camera.position.z = 15;
+<section class="hero">
 
-/* الرندر */
+<div class="hero-content fade">
 
-const renderer = new THREE.WebGLRenderer({
-antialias:true
-});
+<h1>JOKER</h1>
 
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
+<p>
+عيش أجواء الأفلام السينمائية بجودة خرافية وتصميم احترافي مثل Netflix.
+</p>
 
-renderer.setPixelRatio(window.devicePixelRatio);
+<div class="hero-buttons">
 
-document.body.appendChild(renderer.domElement);
+<button class="watch-btn">
+▶️ مشاهدة الآن
+</button>
 
-/* إضاءة */
+<button class="list-btn" onclick="openLogin()">
+➕ حسابي
+</button>
 
-const ambient = new THREE.AmbientLight(
-0xffffff,
-0.5
-);
+</div>
 
-scene.add(ambient);
+</div>
 
-const light = new THREE.PointLight(
-0x00ffff,
-2
-);
+</section>
 
-light.position.set(10,10,10);
+<!-- MOVIES -->
 
-scene.add(light);
+<section class="section">
 
-/* كوكب */
+<h2 class="section-title">
+🔥 الأفلام الرائجة
+</h2>
 
-const planetGeo =
-new THREE.SphereGeometry(4,64,64);
+<div class="movies">
 
-const planetMat =
-new THREE.MeshStandardMaterial({
+<div class="movie-card fade">
 
-color:0x2563eb,
-emissive:0x112244,
-metalness:0.6,
-roughness:0.2
+<img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200">
 
-});
+<div class="movie-info">
+<h3>Galaxy War</h3>
+<p>حرب فضائية ملحمية.</p>
+</div>
 
-const planet =
-new THREE.Mesh(
-planetGeo,
-planetMat
-);
+</div>
 
-scene.add(planet);
+<div class="movie-card fade">
 
-/* حلقة حول الكوكب */
+<img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200">
 
-const ringGeo =
-new THREE.TorusGeometry(6,0.1,16,100);
+<div class="movie-info">
+<h3>Cyber City</h3>
+<p>مدينة مستقبلية غامضة.</p>
+</div>
 
-const ringMat =
-new THREE.MeshBasicMaterial({
-color:0x9333ea
-});
+</div>
 
-const ring =
-new THREE.Mesh(
-ringGeo,
-ringMat
-);
+<div class="movie-card fade">
 
-ring.rotation.x = 1.5;
+<img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=1200">
 
-scene.add(ring);
+<div class="movie-info">
+<h3>Neon World</h3>
+<p>عالم نيون مذهل.</p>
+</div>
 
-/* نجوم */
+</div>
 
-const starsGeometry =
-new THREE.BufferGeometry();
+<div class="movie-card fade">
 
-const starsCount = 10000;
+<img src="https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?q=80&w=1200">
 
-const positions = [];
+<div class="movie-info">
+<h3>Last Planet</h3>
+<p>رحلة إلى آخر كوكب.</p>
+</div>
 
-for(let i=0;i<starsCount;i++){
+</div>
 
-positions.push(
-(Math.random()-0.5)*2000
-);
+</div>
 
-positions.push(
-(Math.random()-0.5)*2000
-);
+</section>
 
-positions.push(
-(Math.random()-0.5)*2000
-);
+<!-- PLAYER -->
+
+<section class="player-section">
+
+<h2 class="section-title">
+🎥 مشغل الفيديو
+</h2>
+
+<div class="video-container fade">
+
+<video controls autoplay muted>
+
+<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+
+</video>
+
+</div>
+
+</section>
+
+<!-- NEW -->
+
+<section class="section">
+
+<h2 class="section-title">
+🚀 أفلام جديدة
+</h2>
+
+<div class="movies">
+
+<div class="movie-card">
+<img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200">
+<div class="movie-info">
+<h3>Dark Future</h3>
+<p>مستقبل غامض مليء بالأسرار.</p>
+</div>
+</div>
+
+<div class="movie-card">
+<img src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?q=80&w=1200">
+<div class="movie-info">
+<h3>Space Night</h3>
+<p>رحلة فضائية مرعبة.</p>
+</div>
+</div>
+
+<div class="movie-card">
+<img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200">
+<div class="movie-info">
+<h3>Red Planet</h3>
+<p>اكتشاف أسرار الكوكب الأحمر.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 MOVIX - جميع الحقوق محفوظة
+
+</footer>
+
+<script>
+
+/* LOGIN */
+
+function openLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display = "flex";
 
 }
 
-starsGeometry.setAttribute(
-'position',
-new THREE.Float32BufferAttribute(
-positions,
-3
-)
-);
+function closeLogin(){
 
-const starsMaterial =
-new THREE.PointsMaterial({
-color:0xffffff,
-size:0.7
-});
+document.getElementById(
+"loginModal"
+).style.display = "none";
 
-const stars =
-new THREE.Points(
-starsGeometry,
-starsMaterial
-);
+}
 
-scene.add(stars);
+/* SEARCH */
 
-/* مكعبات مستقبلية */
+const searchInput =
+document.querySelector(".search-box input");
 
-for(let i=0;i<50;i++){
+searchInput.addEventListener(
+"keyup",
+function(){
 
-const geo =
-new THREE.BoxGeometry(
-Math.random()*2,
-Math.random()*2,
-Math.random()*2
-);
+let value =
+this.value.toLowerCase();
 
-const mat =
-new THREE.MeshStandardMaterial({
+let cards =
+document.querySelectorAll(".movie-card");
 
-color:Math.random()*0xffffff,
-emissive:Math.random()*0x222222
+cards.forEach(card=>{
+
+let text =
+card.innerText.toLowerCase();
+
+card.style.display =
+text.includes(value)
+? "block"
+: "none";
 
 });
 
-const cube =
-new THREE.Mesh(geo,mat);
+});
 
-cube.position.x =
-(Math.random()-0.5)*50;
+/* AUTO SLIDER */
 
-cube.position.y =
-(Math.random()-0.5)*50;
+const sliders =
+document.querySelectorAll(".movies");
 
-cube.position.z =
-(Math.random()-0.5)*50;
+sliders.forEach(slider=>{
 
-scene.add(cube);
+let scrollAmount = 0;
 
-}
+setInterval(()=>{
 
-/* حركة */
+scrollAmount += 260;
 
-function animate(){
+if(scrollAmount >= slider.scrollWidth){
 
-requestAnimationFrame(animate);
-
-planet.rotation.y += 0.003;
-
-ring.rotation.z += 0.002;
-
-stars.rotation.y += 0.0005;
-
-camera.position.x =
-Math.sin(Date.now()*0.0002)*2;
-
-camera.lookAt(planet.position);
-
-renderer.render(scene,camera);
+scrollAmount = 0;
 
 }
 
-animate();
+slider.scrollTo({
 
-/* تغيير الحجم */
-
-window.addEventListener('resize',()=>{
-
-camera.aspect =
-window.innerWidth/window.innerHeight;
-
-camera.updateProjectionMatrix();
-
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-
-);
+left:scrollAmount,
+behavior:"smooth"
 
 });
 
-/* دردشة */
-
-const input =
-document.getElementById("messageInput");
-
-const sendBtn =
-document.getElementById("sendBtn");
-
-const messages =
-document.getElementById("messages");
-
-function addMessage(text,type){
-
-const div =
-document.createElement("div");
-
-div.classList.add("msg");
-
-div.classList.add(type);
-
-div.innerText = text;
-
-messages.appendChild(div);
-
-messages.scrollTop =
-messages.scrollHeight;
-
-}
-
-function sendMessage(){
-
-if(input.value.trim() === "")
-return;
-
-addMessage(input.value,"me");
-
-setTimeout(()=>{
-
-addMessage(
-"🤖 AI: مذهل 🚀",
-"bot"
-);
-
-},1000);
-
-input.value = "";
-
-}
-
-sendBtn.addEventListener(
-"click",
-sendMessage
-);
-
-input.addEventListener(
-"keypress",
-(e)=>{
-
-if(e.key === "Enter"){
-
-sendMessage();
-
-}
+},3000);
 
 });
 
