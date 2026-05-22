@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🎬 MOVIX</title>
+<title>🎮 من سيربح المليون</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -16,281 +16,218 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Cairo',sans-serif;
-scroll-behavior:smooth;
 }
 
 body{
-background:#050505;
+background:
+radial-gradient(circle at top,#1e3a8a,#020617);
 color:white;
-overflow-x:hidden;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-/* NAVBAR */
+.game-container{
+width:95%;
+max-width:1200px;
+height:92vh;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+border-radius:30px;
+display:flex;
+overflow:hidden;
+box-shadow:0 0 40px rgba(0,0,0,0.5);
+}
 
-.navbar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:80px;
+/* الجوائز */
+
+.money-board{
+width:280px;
+background:rgba(255,255,255,0.05);
+padding:20px;
+overflow-y:auto;
+}
+
+.money-board h2{
+text-align:center;
+margin-bottom:20px;
+font-size:30px;
+color:#facc15;
+}
+
+.money{
+padding:12px;
+margin:10px 0;
+border-radius:12px;
+background:#111827;
+transition:0.3s;
+}
+
+.active{
+background:#f59e0b;
+color:black;
+font-weight:bold;
+}
+
+/* اللعبة */
+
+.game{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:30px;
+position:relative;
+}
+
+/* الهيدر */
+
+.top-bar{
+position:absolute;
+top:20px;
+left:20px;
+right:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 40px;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(15px);
-z-index:999;
 }
 
-.logo{
-font-size:38px;
-font-weight:900;
-color:#ff1e1e;
-text-shadow:0 0 20px red;
-}
-
-.nav-links{
+.timer{
+width:90px;
+height:90px;
+border-radius:50%;
+background:#2563eb;
 display:flex;
-gap:25px;
-}
-
-.nav-links a{
-color:white;
-text-decoration:none;
-font-size:17px;
-transition:0.3s;
-}
-
-.nav-links a:hover{
-color:#ff1e1e;
-}
-
-.search-box{
-display:flex;
+justify-content:center;
 align-items:center;
-background:#111;
-padding:10px 15px;
-border-radius:12px;
+font-size:35px;
+font-weight:bold;
+box-shadow:0 0 20px #2563eb;
 }
 
-.search-box input{
-background:none;
-border:none;
-outline:none;
-color:white;
-font-size:15px;
-width:180px;
-}
-
-/* HERO */
-
-.hero{
-height:100vh;
-background:
-linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,0,0,0.3)),
-url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070');
-background-size:cover;
-background-position:center;
-display:flex;
-align-items:center;
-padding:80px;
-}
-
-.hero-content{
-max-width:650px;
-}
-
-.hero h1{
-font-size:85px;
-font-weight:900;
-margin-bottom:20px;
-}
-
-.hero p{
+.level{
 font-size:22px;
-line-height:1.8;
-color:#ddd;
-margin-bottom:30px;
+color:#facc15;
 }
 
-.hero-buttons{
-display:flex;
+/* السؤال */
+
+.question-box{
+width:100%;
+max-width:800px;
+background:linear-gradient(135deg,#1e3a8a,#2563eb);
+padding:35px;
+border-radius:25px;
+font-size:30px;
+text-align:center;
+margin-bottom:40px;
+box-shadow:0 0 30px rgba(37,99,235,0.5);
+animation:show 0.5s ease;
+}
+
+/* الإجابات */
+
+.answers{
+width:100%;
+max-width:900px;
+display:grid;
+grid-template-columns:1fr 1fr;
 gap:20px;
 }
 
-.hero-buttons button{
-padding:18px 35px;
+.answer{
+padding:22px;
+background:#111827;
+border-radius:18px;
+font-size:22px;
+cursor:pointer;
+transition:0.3s;
+border:2px solid transparent;
+}
+
+.answer:hover{
+background:#2563eb;
+transform:scale(1.03);
+}
+
+.correct{
+background:#16a34a !important;
+}
+
+.wrong{
+background:#dc2626 !important;
+}
+
+/* أزرار المساعدة */
+
+.help-buttons{
+margin-top:30px;
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.help-buttons button{
+padding:14px 20px;
 border:none;
 border-radius:15px;
-font-size:18px;
+background:#9333ea;
+color:white;
 cursor:pointer;
+font-size:16px;
 transition:0.3s;
 }
 
-.watch-btn{
-background:#ff1e1e;
-color:white;
-}
-
-.watch-btn:hover{
+.help-buttons button:hover{
 transform:scale(1.05);
 }
 
-.list-btn{
-background:#222;
-color:white;
-}
+/* شاشة النهاية */
 
-.list-btn:hover{
-background:#333;
-}
-
-/* SLIDER */
-
-.section{
-padding:50px;
-}
-
-.section-title{
-font-size:35px;
-margin-bottom:30px;
-font-weight:800;
-}
-
-.movies{
-display:flex;
-overflow-x:auto;
-gap:20px;
-padding-bottom:20px;
-}
-
-.movies::-webkit-scrollbar{
-display:none;
-}
-
-.movie-card{
-min-width:240px;
-background:#111;
-border-radius:20px;
-overflow:hidden;
-transition:0.3s;
-cursor:pointer;
-position:relative;
-}
-
-.movie-card:hover{
-transform:translateY(-10px) scale(1.03);
-}
-
-.movie-card img{
-width:100%;
-height:340px;
-object-fit:cover;
-}
-
-.movie-info{
-padding:15px;
-}
-
-.movie-info h3{
-margin-bottom:10px;
-font-size:20px;
-}
-
-.movie-info p{
-font-size:14px;
-color:#aaa;
-line-height:1.7;
-}
-
-/* VIDEO PLAYER */
-
-.player-section{
-padding:50px;
-}
-
-.video-container{
-position:relative;
-width:100%;
-border-radius:25px;
-overflow:hidden;
-box-shadow:0 0 40px rgba(0,0,0,0.6);
-}
-
-video{
-width:100%;
-display:block;
-background:black;
-}
-
-/* LOGIN */
-
-.login-modal{
-position:fixed;
+.end-screen{
+position:absolute;
 top:0;
 left:0;
 width:100%;
-height:100vh;
-background:rgba(0,0,0,0.8);
+height:100%;
+background:rgba(0,0,0,0.95);
 display:none;
 justify-content:center;
 align-items:center;
-z-index:9999;
-}
-
-.login-box{
-width:400px;
-background:#111;
-padding:40px;
-border-radius:25px;
+flex-direction:column;
+z-index:999;
 text-align:center;
+padding:20px;
 }
 
-.login-box h2{
-margin-bottom:25px;
-font-size:35px;
+.end-screen h1{
+font-size:60px;
+margin-bottom:20px;
+color:#facc15;
 }
 
-.login-box input{
-width:100%;
-padding:15px;
-margin:10px 0;
+.end-screen p{
+font-size:28px;
+margin-bottom:30px;
+}
+
+.end-screen button{
+padding:18px 35px;
 border:none;
-outline:none;
-border-radius:12px;
-background:#1e1e1e;
+border-radius:18px;
+background:#2563eb;
 color:white;
-}
-
-.login-box button{
-width:100%;
-padding:15px;
-margin-top:15px;
-border:none;
-border-radius:12px;
-background:#ff1e1e;
-color:white;
-font-size:18px;
+font-size:20px;
 cursor:pointer;
 }
 
-/* FOOTER */
+/* حركة */
 
-footer{
-padding:40px;
-text-align:center;
-background:#111;
-color:#999;
-margin-top:50px;
-}
-
-/* ANIMATION */
-
-.fade{
-animation:fade 1s ease;
-}
-
-@keyframes fade{
+@keyframes show{
 from{
 opacity:0;
 transform:translateY(20px);
@@ -301,40 +238,46 @@ transform:translateY(0);
 }
 }
 
-/* MOBILE */
+/* الهاتف */
 
 @media(max-width:900px){
 
-.navbar{
-padding:0 20px;
+.game-container{
+flex-direction:column;
+height:100vh;
+border-radius:0;
 }
 
-.nav-links{
-display:none;
+.money-board{
+width:100%;
+height:180px;
+display:flex;
+overflow-x:auto;
+gap:10px;
 }
 
-.hero{
-padding:30px;
+.money{
+min-width:140px;
+text-align:center;
 }
 
-.hero h1{
-font-size:55px;
+.question-box{
+font-size:22px;
+padding:25px;
 }
 
-.hero p{
+.answers{
+grid-template-columns:1fr;
+}
+
+.answer{
 font-size:18px;
 }
 
-.hero-buttons{
-flex-direction:column;
-}
-
-.movie-card{
-min-width:180px;
-}
-
-.login-box{
-width:90%;
+.timer{
+width:70px;
+height:70px;
+font-size:28px;
 }
 
 }
@@ -345,275 +288,560 @@ width:90%;
 
 <body>
 
-<!-- LOGIN -->
+<div class="game-container">
 
-<div class="login-modal" id="loginModal">
+<!-- الجوائز -->
 
-<div class="login-box fade">
+<div class="money-board">
 
-<h2>🎬 تسجيل الدخول</h2>
+<h2>💰 الجوائز</h2>
 
-<input type="email" placeholder="البريد الإلكتروني">
+<div id="moneyList"></div>
 
-<input type="password" placeholder="كلمة المرور">
+</div>
 
-<button onclick="closeLogin()">
-دخول
+<!-- اللعبة -->
+
+<div class="game">
+
+<div class="top-bar">
+
+<div class="timer" id="timer">
+30
+</div>
+
+<div class="level" id="level">
+السؤال 1 / 30
+</div>
+
+</div>
+
+<div class="question-box" id="question">
+تحميل السؤال...
+</div>
+
+<div class="answers" id="answers">
+</div>
+
+<div class="help-buttons">
+
+<button onclick="fiftyFifty()">
+50 / 50
+</button>
+
+<button onclick="changeQuestion()">
+تغيير السؤال
+</button>
+
+<button onclick="callFriend()">
+📞 اتصال بصديق
 </button>
 
 </div>
 
 </div>
 
-<!-- NAVBAR -->
+<!-- النهاية -->
 
-<div class="navbar">
+<div class="end-screen" id="endScreen">
 
-<div class="logo">
-MOVIX
-</div>
+<h1 id="endTitle">
+انتهت اللعبة
+</h1>
 
-<div class="nav-links">
-<a href="#">الرئيسية</a>
-<a href="#">الأفلام</a>
-<a href="#">المسلسلات</a>
-<a href="#">الأكثر مشاهدة</a>
-</div>
+<p id="endText"></p>
 
-<div class="search-box">
-<input type="text" placeholder="ابحث عن فيلم...">
-</div>
-
-</div>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-content fade">
-
-<h1>JOKER</h1>
-
-<p>
-عيش أجواء الأفلام السينمائية بجودة خرافية وتصميم احترافي مثل Netflix.
-</p>
-
-<div class="hero-buttons">
-
-<button class="watch-btn">
-▶️ مشاهدة الآن
-</button>
-
-<button class="list-btn" onclick="openLogin()">
-➕ حسابي
+<button onclick="location.reload()">
+إعادة اللعب
 </button>
 
 </div>
 
 </div>
-
-</section>
-
-<!-- MOVIES -->
-
-<section class="section">
-
-<h2 class="section-title">
-🔥 الأفلام الرائجة
-</h2>
-
-<div class="movies">
-
-<div class="movie-card fade">
-
-<img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200">
-
-<div class="movie-info">
-<h3>Galaxy War</h3>
-<p>حرب فضائية ملحمية.</p>
-</div>
-
-</div>
-
-<div class="movie-card fade">
-
-<img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200">
-
-<div class="movie-info">
-<h3>Cyber City</h3>
-<p>مدينة مستقبلية غامضة.</p>
-</div>
-
-</div>
-
-<div class="movie-card fade">
-
-<img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=1200">
-
-<div class="movie-info">
-<h3>Neon World</h3>
-<p>عالم نيون مذهل.</p>
-</div>
-
-</div>
-
-<div class="movie-card fade">
-
-<img src="https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?q=80&w=1200">
-
-<div class="movie-info">
-<h3>Last Planet</h3>
-<p>رحلة إلى آخر كوكب.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- PLAYER -->
-
-<section class="player-section">
-
-<h2 class="section-title">
-🎥 مشغل الفيديو
-</h2>
-
-<div class="video-container fade">
-
-<video controls autoplay muted>
-
-<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-
-</video>
-
-</div>
-
-</section>
-
-<!-- NEW -->
-
-<section class="section">
-
-<h2 class="section-title">
-🚀 أفلام جديدة
-</h2>
-
-<div class="movies">
-
-<div class="movie-card">
-<img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200">
-<div class="movie-info">
-<h3>Dark Future</h3>
-<p>مستقبل غامض مليء بالأسرار.</p>
-</div>
-</div>
-
-<div class="movie-card">
-<img src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?q=80&w=1200">
-<div class="movie-info">
-<h3>Space Night</h3>
-<p>رحلة فضائية مرعبة.</p>
-</div>
-</div>
-
-<div class="movie-card">
-<img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200">
-<div class="movie-info">
-<h3>Red Planet</h3>
-<p>اكتشاف أسرار الكوكب الأحمر.</p>
-</div>
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-© 2026 MOVIX - جميع الحقوق محفوظة
-
-</footer>
 
 <script>
 
-/* LOGIN */
+/* الأسئلة */
 
-function openLogin(){
+const questions = [
+
+{
+q:"ما عاصمة الجزائر؟",
+a:["الجزائر","وهران","سطيف","عنابة"],
+c:0
+},
+
+{
+q:"كم عدد كواكب المجموعة الشمسية؟",
+a:["7","8","9","10"],
+c:1
+},
+
+{
+q:"من اخترع الهاتف؟",
+a:["أينشتاين","نيوتن","غراهام بيل","تسلا"],
+c:2
+},
+
+{
+q:"ما أكبر محيط في العالم؟",
+a:["الهندي","الأطلسي","المتجمد","الهادئ"],
+c:3
+},
+
+{
+q:"كم عدد أيام السنة؟",
+a:["365","300","400","360"],
+c:0
+},
+
+{
+q:"ما أسرع حيوان بري؟",
+a:["الأسد","الفهد","النمر","الذئب"],
+c:1
+},
+
+{
+q:"ما الكوكب الأحمر؟",
+a:["المريخ","زحل","الأرض","عطارد"],
+c:0
+},
+
+{
+q:"من رسم الموناليزا؟",
+a:["فان غوخ","بيكاسو","دافنشي","رامبرانت"],
+c:2
+},
+
+{
+q:"ما اللغة الرسمية في البرازيل؟",
+a:["الإسبانية","الفرنسية","الإنجليزية","البرتغالية"],
+c:3
+},
+
+{
+q:"كم عدد القارات؟",
+a:["5","6","7","8"],
+c:2
+},
+
+{
+q:"ما أكبر حيوان في العالم؟",
+a:["الفيل","الحوت الأزرق","القرش","الزرافة"],
+c:1
+},
+
+{
+q:"ما عاصمة اليابان؟",
+a:["سيول","بكين","طوكيو","بانكوك"],
+c:2
+},
+
+{
+q:"ما العنصر الذي نتنفسه؟",
+a:["الهيدروجين","الأكسجين","النيتروجين","الهيليوم"],
+c:1
+},
+
+{
+q:"من مؤسس فيسبوك؟",
+a:["إيلون ماسك","بيل غيتس","مارك زوكربيرغ","ستيف جوبز"],
+c:2
+},
+
+{
+q:"كم عدد ألوان قوس قزح؟",
+a:["5","6","7","8"],
+c:2
+},
+
+{
+q:"ما أكبر قارة؟",
+a:["أفريقيا","أوروبا","آسيا","أمريكا"],
+c:2
+},
+
+{
+q:"ما عاصمة فرنسا؟",
+a:["باريس","روما","مدريد","برلين"],
+c:0
+},
+
+{
+q:"من مكتشف الجاذبية؟",
+a:["أينشتاين","نيوتن","غاليلو","داروين"],
+c:1
+},
+
+{
+q:"كم عدد الأسنان عند الإنسان البالغ؟",
+a:["28","30","32","34"],
+c:2
+},
+
+{
+q:"أين يوجد برج إيفل؟",
+a:["إيطاليا","ألمانيا","فرنسا","إسبانيا"],
+c:2
+},
+
+{
+q:"ما أصغر دولة في العالم؟",
+a:["قطر","الفاتيكان","مالطا","البحرين"],
+c:1
+},
+
+{
+q:"ما أطول نهر في العالم؟",
+a:["النيل","الأمازون","الدانوب","الفرات"],
+c:0
+},
+
+{
+q:"كم عدد ساعات اليوم؟",
+a:["20","22","24","26"],
+c:2
+},
+
+{
+q:"ما الحيوان الملقب بسفينة الصحراء؟",
+a:["الحصان","الجمل","الماعز","الذئب"],
+c:1
+},
+
+{
+q:"ما أكبر دولة في العالم؟",
+a:["الصين","أمريكا","روسيا","الهند"],
+c:2
+},
+
+{
+q:"ما عاصمة كندا؟",
+a:["تورنتو","أوتاوا","مونتريال","فانكوفر"],
+c:1
+},
+
+{
+q:"من أول إنسان صعد إلى القمر؟",
+a:["نيل أرمسترونغ","يوري غاغارين","أينشتاين","تسلا"],
+c:0
+},
+
+{
+q:"ما لون الزمرد؟",
+a:["أحمر","أزرق","أخضر","أصفر"],
+c:2
+},
+
+{
+q:"كم عدد البحار في العالم تقريبًا؟",
+a:["50","60","70","80"],
+c:1
+},
+
+{
+q:"ما الكوكب الأقرب للشمس؟",
+a:["الأرض","المريخ","عطارد","زحل"],
+c:2
+}
+
+];
+
+/* الجوائز */
+
+const moneyLevels = [
+
+"100$",
+"200$",
+"300$",
+"500$",
+"1,000$",
+"2,000$",
+"4,000$",
+"8,000$",
+"16,000$",
+"32,000$",
+"64,000$",
+"125,000$",
+"250,000$",
+"500,000$",
+"1,000,000$",
+"2,000,000$",
+"3,000,000$",
+"4,000,000$",
+"5,000,000$",
+"6,000,000$",
+"7,000,000$",
+"8,000,000$",
+"9,000,000$",
+"10,000,000$",
+"15,000,000$",
+"20,000,000$",
+"30,000,000$",
+"40,000,000$",
+"50,000,000$",
+"100,000,000$"
+
+];
+
+const questionEl =
+document.getElementById("question");
+
+const answersEl =
+document.getElementById("answers");
+
+const timerEl =
+document.getElementById("timer");
+
+const levelEl =
+document.getElementById("level");
+
+const moneyList =
+document.getElementById("moneyList");
+
+let current = 0;
+
+let timer = 30;
+
+let interval;
+
+/* الجوائز */
+
+moneyLevels.forEach((m,i)=>{
+
+const div =
+document.createElement("div");
+
+div.classList.add("money");
+
+if(i === 0){
+
+div.classList.add("active");
+
+}
+
+div.innerText = m;
+
+moneyList.prepend(div);
+
+});
+
+/* تحميل السؤال */
+
+function loadQuestion(){
+
+clearInterval(interval);
+
+timer = 30;
+
+timerEl.innerText = timer;
+
+interval = setInterval(()=>{
+
+timer--;
+
+timerEl.innerText = timer;
+
+if(timer <= 0){
+
+loseGame();
+
+}
+
+},1000);
+
+const q = questions[current];
+
+questionEl.innerText = q.q;
+
+answersEl.innerHTML = "";
+
+levelEl.innerText =
+`السؤال ${current+1} / 30`;
+
+q.a.forEach((answer,index)=>{
+
+const btn =
+document.createElement("div");
+
+btn.classList.add("answer");
+
+btn.innerText = answer;
+
+btn.onclick = ()=>checkAnswer(index,btn);
+
+answersEl.appendChild(btn);
+
+});
+
+updateMoney();
+
+}
+
+/* التحقق */
+
+function checkAnswer(index,btn){
+
+clearInterval(interval);
+
+const q = questions[current];
+
+if(index === q.c){
+
+btn.classList.add("correct");
+
+setTimeout(()=>{
+
+current++;
+
+if(current >= questions.length){
+
+winGame();
+
+}else{
+
+loadQuestion();
+
+}
+
+},1500);
+
+}else{
+
+btn.classList.add("wrong");
+
+loseGame();
+
+}
+
+}
+
+/* خسارة */
+
+function loseGame(){
 
 document.getElementById(
-"loginModal"
+"endScreen"
 ).style.display = "flex";
 
-}
-
-function closeLogin(){
+document.getElementById(
+"endTitle"
+).innerText = "❌ خسرت";
 
 document.getElementById(
-"loginModal"
-).style.display = "none";
+"endText"
+).innerText =
+`وصلت إلى السؤال ${current+1}`;
 
 }
 
-/* SEARCH */
+/* فوز */
 
-const searchInput =
-document.querySelector(".search-box input");
+function winGame(){
 
-searchInput.addEventListener(
-"keyup",
-function(){
+document.getElementById(
+"endScreen"
+).style.display = "flex";
 
-let value =
-this.value.toLowerCase();
+document.getElementById(
+"endTitle"
+).innerText = "🏆 مبروك";
 
-let cards =
-document.querySelectorAll(".movie-card");
-
-cards.forEach(card=>{
-
-let text =
-card.innerText.toLowerCase();
-
-card.style.display =
-text.includes(value)
-? "block"
-: "none";
-
-});
-
-});
-
-/* AUTO SLIDER */
-
-const sliders =
-document.querySelectorAll(".movies");
-
-sliders.forEach(slider=>{
-
-let scrollAmount = 0;
-
-setInterval(()=>{
-
-scrollAmount += 260;
-
-if(scrollAmount >= slider.scrollWidth){
-
-scrollAmount = 0;
+document.getElementById(
+"endText"
+).innerText =
+"لقد ربحت 100 مليون دولار 🎉";
 
 }
 
-slider.scrollTo({
+/* تحديث الجوائز */
 
-left:scrollAmount,
-behavior:"smooth"
+function updateMoney(){
+
+const items =
+document.querySelectorAll(".money");
+
+items.forEach(item=>{
+
+item.classList.remove("active");
 
 });
 
-},3000);
+items[
+items.length - 1 - current
+].classList.add("active");
+
+}
+
+/* 50/50 */
+
+let used5050 = false;
+
+function fiftyFifty(){
+
+if(used5050) return;
+
+used5050 = true;
+
+const q = questions[current];
+
+const answers =
+document.querySelectorAll(".answer");
+
+let removed = 0;
+
+answers.forEach((a,i)=>{
+
+if(i !== q.c && removed < 2){
+
+a.style.visibility = "hidden";
+
+removed++;
+
+}
 
 });
+
+}
+
+/* تغيير السؤال */
+
+let changed = false;
+
+function changeQuestion(){
+
+if(changed) return;
+
+changed = true;
+
+current++;
+
+if(current >= questions.length){
+
+current = questions.length -1;
+
+}
+
+loadQuestion();
+
+}
+
+/* اتصال بصديق */
+
+function callFriend(){
+
+alert(
+"📞 صديقك يعتقد أن الإجابة الصحيحة هي: " +
+questions[current].a[
+questions[current].c
+]
+);
+
+}
+
+/* بدء */
+
+loadQuestion();
 
 </script>
 
