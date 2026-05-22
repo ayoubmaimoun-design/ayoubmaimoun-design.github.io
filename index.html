@@ -1,24 +1,145 @@
-from pathlib import Path
-
-import zipfile
-
-base = Path("/mnt/data/chat-pro-site")
-
-base.mkdir(exist_ok=True)
-
-index_html = """<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="ar">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Chat Pro</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#0f172a;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.container{
+width:95%;
+max-width:1000px;
+height:90vh;
+background:#1e293b;
+border-radius:20px;
+overflow:hidden;
+display:flex;
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+.sidebar{
+width:250px;
+background:#111827;
+padding:20px;
+color:white;
+border-right:1px solid #334155;
+}
+
+.sidebar h2{
+margin-bottom:10px;
+}
+
+.sidebar p{
+color:#94a3b8;
+}
+
+.chat-area{
+flex:1;
+display:flex;
+flex-direction:column;
+background:#0f172a;
+}
+
+.header{
+padding:20px;
+background:#1e293b;
+color:white;
+font-size:22px;
+font-weight:bold;
+border-bottom:1px solid #334155;
+}
+
+#messages{
+flex:1;
+padding:20px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+}
+
+.message{
+padding:12px;
+margin:10px 0;
+border-radius:15px;
+max-width:70%;
+color:white;
+word-wrap:break-word;
+}
+
+.me{
+background:#2563eb;
+align-self:flex-end;
+}
+
+.other{
+background:#334155;
+align-self:flex-start;
+}
+
+.send-box{
+display:flex;
+padding:15px;
+background:#1e293b;
+border-top:1px solid #334155;
+}
+
+.send-box input{
+flex:1;
+padding:14px;
+border:none;
+outline:none;
+border-radius:12px;
+font-size:16px;
+}
+
+.send-box button{
+margin-left:10px;
+padding:14px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+transition:0.3s;
+}
+
+.send-box button:hover{
+background:#1d4ed8;
+}
+
+@media(max-width:700px){
+
+.sidebar{
+display:none;
+}
+
+.container{
+width:100%;
+height:100vh;
+border-radius:0;
+}
+
+}
+
+</style>
 
 </head>
 
@@ -27,148 +148,41 @@ index_html = """<!DOCTYPE html>
 <div class="container">
 
 <div class="sidebar">
-
 <h2>💬 Chat Pro</h2>
-
-<p>موقع دردشة احترافي</p>
-
+<p>دردشة مباشرة احترافية</p>
 </div>
 
 <div class="chat-area">
 
+<div class="header">
+Chat Pro
+</div>
+
 <div id="messages"></div>
 
 <div class="send-box">
-
-<input type="text" id="messageInput" placeholder="اكتب رسالة">
-
+<input type="text" id="messageInput" placeholder="اكتب رسالة...">
 <button id="sendBtn">إرسال</button>
-
 </div>
 
 </div>
 
 </div>
 
-<script type="module" src="app.js"></script>
+<script type="module">
 
-</body>
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-</html>
-
-"""
-
-style_css = """body{
-
-margin:0;
-
-font-family:Arial;
-
-background:#0f172a;
-
-color:white;
-
+import {
+getFirestore,
+collection,
+addDoc,
+onSnapshot,
+query,
+orderBy
 }
-
-.container{
-
-display:flex;
-
-height:100vh;
-
-}
-
-.sidebar{
-
-width:250px;
-
-background:#1e293b;
-
-padding:20px;
-
-}
-
-.chat-area{
-
-flex:1;
-
-display:flex;
-
-flex-direction:column;
-
-}
-
-#messages{
-
-flex:1;
-
-padding:20px;
-
-overflow-y:auto;
-
-}
-
-.message{
-
-background:#2563eb;
-
-padding:10px;
-
-margin:10px 0;
-
-border-radius:10px;
-
-width:fit-content;
-
-max-width:70%;
-
-}
-
-.send-box{
-
-display:flex;
-
-padding:15px;
-
-background:#1e293b;
-
-}
-
-.send-box input{
-
-flex:1;
-
-padding:12px;
-
-border:none;
-
-border-radius:10px;
-
-}
-
-.send-box button{
-
-margin-left:10px;
-
-padding:12px 20px;
-
-background:#2563eb;
-
-color:white;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-}
-
-"""
-
-firebase_js = """import { initializeApp } from 
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
@@ -180,52 +194,29 @@ projectId: "YOUR_PROJECT",
 
 storageBucket: "YOUR_PROJECT.appspot.com",
 
-messagingSenderId: "123456",
+messagingSenderId: "123456789",
 
-appId: "APP_ID"
+appId: "YOUR_APP_ID"
 
 };
 
-export const app = initializeApp(firebaseConfig);
-
-"""
-
-app_js = """import { app } from "./firebase.js";
-
-import {
-
-getFirestore,
-
-collection,
-
-addDoc,
-
-onSnapshot,
-
-query,
-
-orderBy
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+const messages = document.getElementById("messages");
 
 const input = document.getElementById("messageInput");
 
 const sendBtn = document.getElementById("sendBtn");
 
-const messages = document.getElementById("messages");
+async function sendMessage(){
 
-sendBtn.onclick = async () => {
-
-if(input.value.trim() !== ""){
+if(input.value.trim() === "") return;
 
 await addDoc(collection(db,"messages"),{
 
 text: input.value,
-
 time: Date.now()
 
 });
@@ -234,9 +225,22 @@ input.value = "";
 
 }
 
-};
+sendBtn.addEventListener("click",sendMessage);
 
-const q = query(collection(db,"messages"),orderBy("time"));
+input.addEventListener("keypress",(e)=>{
+
+if(e.key === "Enter"){
+
+sendMessage();
+
+}
+
+});
+
+const q = query(
+collection(db,"messages"),
+orderBy("time")
+);
 
 onSnapshot(q,(snapshot)=>{
 
@@ -244,34 +248,27 @@ messages.innerHTML = "";
 
 snapshot.forEach((doc)=>{
 
+const data = doc.data();
+
 const div = document.createElement("div");
 
-div.className = "message";
+div.classList.add("message");
 
-div.innerText = doc.data().text;
+div.classList.add(
+Math.random() > 0.5 ? "me" : "other"
+);
+
+div.innerText = data.text;
 
 messages.appendChild(div);
 
 });
 
+messages.scrollTop = messages.scrollHeight;
+
 });
 
-"""
+</script>
 
-(base / "index.html").write_text(index_html, encoding="utf-8")
-
-(base / "style.css").write_text(style_css, encoding="utf-8")
-
-(base / "firebase.js").write_text(firebase_js, encoding="utf-8")
-
-(base / "app.js").write_text(app_js, encoding="utf-8")
-
-zip_path = "/mnt/data/chat-pro-site.zip"
-
-with zipfile.ZipFile(zip_path, "w") as zipf:
-
-    for file in base.iterdir():
-
-        zipf.write(file, arcname=file.name)
-
-print("Created:", zip_path)
+</body>
+</html>
